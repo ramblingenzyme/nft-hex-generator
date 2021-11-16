@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import AvatarEditor from "react-avatar-editor";
 import React, { useState, useRef } from "react";
