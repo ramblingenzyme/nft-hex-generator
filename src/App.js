@@ -104,10 +104,14 @@ function App() {
           </div>
         )}
       </Dropzone>
-      <div style={{ display: "inline-flex"}}>
+      <div style={{ display: "inline-flex", marginTop: "5px" }}>
         <span>hexagon that boi:</span>
         <input type="button" onClick={handleSave} value="yeaaaaa" style={{ marginLeft: "5px" }} />
       </div>
+      <p>This will give you a 400x400 PNG with a transparent hexagon border.</p>
+      <p>Uploading this to Twitter via the website or Android app is known to work.</p>
+      <p>However the iOS app will strip the transparency. (Thanks <a href="https://twitter.com/pbrdmn">@pbrdmn</a> for discovering that.)</p>
+      <p>Big thanks to <a href="https://twitter.com/eevee">@eevee</a> for putting the original template together.</p>
     </div>
   );
 }
