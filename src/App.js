@@ -25,18 +25,21 @@ const hexagonThatBoy = (userImage: HTMLCanvasElement) => {
 
   Promise.all([Jimp.read(imageDataUrl), Jimp.read(HexBitmap)]).then(
     ([userImage, hexBitmap]) => {
-      userImage.scan(
-        0,
-        0,
-        userImage.bitmap.width,
-        userImage.bitmap.height,
-        function (x, y, idx) {
-          const { r, g, b } = Jimp.intToRGBA(hexBitmap.getPixelColor(x, y));
-          if (r === 255 && g === 255 && b === 255) {
-            this.bitmap.data[idx + 3] = 0;
+      userImage
+        .scan(
+          0,
+          0,
+          userImage.bitmap.width,
+          userImage.bitmap.height,
+          function (x, y, idx) {
+            const { r, g, b } = Jimp.intToRGBA(hexBitmap.getPixelColor(x, y));
+            if (r === 255 && g === 255 && b === 255) {
+              this.bitmap.data[idx + 3] = 0;
+            }
           }
-        }
-      ).getBase64Async(Jimp.MIME_PNG).then(x => saveAs(x));
+        )
+        .getBase64Async(Jimp.MIME_PNG)
+        .then(saveAs);
     }
   );
 };
@@ -55,12 +58,13 @@ function App() {
 
   return (
     <div className="App">
+      <h1>make them bois hexagons</h1>
       <Dropzone
         onDrop={(dropped) => setImage(dropped[0])}
         noClick
         noKeyboard
         multiple={false}
-        style={{ width: "400px", height: "400px" }}
+        style={{ width: "500px", height: "500px" }}
       >
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
@@ -69,35 +73,42 @@ function App() {
               image={image}
               width={400}
               height={400}
+              border={75}
               color={[255, 255, 255, 0.6]}
               scale={scale}
             />
-            <br />
-            New file:
-            <input
-              name="newImage"
-              type="file"
-              onChange={(e) => setImage(e.target.files[0])}
-              {...getInputProps()}
-              style={{ display: "initial" }}
-            />
+            <div>
+              <div style={{ display: "inline-flex" }}>
+              <span>new file:</span>
+              <input
+                name="newImage"
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+                {...getInputProps()}
+                style={{ display: "initial", marginLeft: "5px" }}
+              />
+              </div>
+              <div style={{ display: "inline-flex" }}>
+                <span>zoom:</span>
+                <input
+                  name="scale"
+                  type="range"
+                  onChange={setScale}
+                  min={1}
+                  max="2"
+                  step="0.01"
+                  defaultValue="1"
+                  style={{ marginLeft: "5px" }}
+                />
+              </div>
+            </div>
           </div>
         )}
       </Dropzone>
-      <br />
-      Zoom:
-      <input
-        name="scale"
-        type="range"
-        onChange={setScale}
-        min={1}
-        max="2"
-        step="0.01"
-        defaultValue="1"
-      />
-      <br />
-      Hexagon that boy:
-      <input type="button" onClick={handleSave} value="Hexagon boi" />
+      <div style={{ display: "inline-flex"}}>
+        <span>hexagon that boi:</span>
+        <input type="button" onClick={handleSave} value="yeaaaaa" style={{ marginLeft: "5px" }} />
+      </div>
     </div>
   );
 }
